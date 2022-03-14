@@ -1,0 +1,26 @@
+<p-listbox
+  [filter]="true"
+  [options]="statuses"
+  [(ngModel)]="selectedStatus"
+  [disabled]="loading"
+  optionLabel="name"
+  optionValue="code"
+></p-listbox>
+
+<button
+  [disabled]="!selectedStatus || loading"
+  pButton
+  pRipple
+  type="button"
+  label="Зберегти"
+  class="p-button-success mt-5"
+  (click)="onSave()"
+>
+  <p-progressSpinner
+    *ngIf="loading"
+    strokeWidth="5"
+    animationDuration="3s"
+    class="mr-2"
+    [style]="{width: '20px', height: '20px'}"
+  ></p-progressSpinner>
+</button>

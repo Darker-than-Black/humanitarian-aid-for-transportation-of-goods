@@ -1,0 +1,13 @@
+<div class="goods-table__item">
+  <span class="goods-table__column-title">
+    {{ title }}
+  </span>
+
+  <ng-template #defaultTemplate>
+    {{ fieldData }}
+  </ng-template>
+
+  <ng-container
+    *ngTemplateOutlet="template || defaultTemplate; context: { $implicit: fieldData }"
+  ></ng-container>
+</div>

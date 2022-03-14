@@ -1,0 +1,78 @@
+<app-tabs>
+  <app-tab tabTitle="Замінити">
+    <p-listbox
+      [filter]="true"
+      [options]="drivers"
+      [(ngModel)]="selectedDriver"
+      [disabled]="loading"
+      optionLabel="label"
+    ></p-listbox>
+
+    <button
+      [disabled]="!selectedDriver || loading"
+      pButton
+      pRipple
+      type="button"
+      label="Зберегти"
+      class="p-button-success mt-5"
+      (click)="updateItem({driver: selectedDriver})"
+    >
+      <p-progressSpinner
+        *ngIf="loading"
+        strokeWidth="5"
+        animationDuration="3s"
+        class="mr-2"
+        [style]="{width: '20px', height: '20px'}"
+      ></p-progressSpinner>
+    </button>
+  </app-tab>
+
+  <app-tab tabTitle="Додати нового водія">
+    <form class="grid p-fluid" [formGroup]="form" (ngSubmit)="addDriver()">
+      <div class="col-12">
+        <span>Ім’я</span>
+        <input
+          type="text"
+          id="inputtext"
+          pInputText
+          formControlName="name"
+          class="w-full"
+        />
+      </div>
+
+      <div class="col-12">
+        <span>Телефон</span>
+        <p-inputMask
+          formControlName="contact_phone"
+          mask="+(999) 999-9999"
+          placeholder="+(999) 999-9999"
+          class="w-full"
+        ></p-inputMask>
+      </div>
+
+      <div class="col-12">
+        <span>Коментар</span>
+        <textarea [rows]="5" [cols]="30" pInputTextarea formControlName="comment"></textarea>
+      </div>
+
+      <div class="col-12">
+        <button
+          [disabled]="!form.valid || loading"
+          pButton
+          pRipple
+          type="submit"
+          label="Зберегти"
+          class="p-button-success"
+        >
+          <p-progressSpinner
+            *ngIf="loading"
+            strokeWidth="5"
+            animationDuration="3s"
+            class="mr-2"
+            [style]="{width: '20px', height: '20px'}"
+          ></p-progressSpinner>
+        </button>
+      </div>
+    </form>
+  </app-tab>
+</app-tabs>

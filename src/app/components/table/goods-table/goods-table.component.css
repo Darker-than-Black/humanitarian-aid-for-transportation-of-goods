@@ -1,0 +1,17 @@
+.goods-table__column-title {
+  display: none;
+}
+
+@media screen and (max-width: 960px) {
+  .goods-table__row:nth-child(even) {
+    background: var(--gray-50);
+  }
+
+  .goods-table__td {
+    padding: 5px !important;
+  }
+
+  .goods-table__btn {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,25 @@
+<textarea
+  [rows]="5"
+  [cols]="30"
+  pInputTextarea
+  [(ngModel)]="location"
+  class="w-full"
+></textarea>
+
+<button
+  [disabled]="loading"
+  pButton
+  pRipple
+  type="button"
+  label="Зберегти"
+  class="p-button-success mt-5"
+  (click)="updateItem({location})"
+>
+  <p-progressSpinner
+    *ngIf="loading"
+    strokeWidth="5"
+    animationDuration="3s"
+    class="mr-2"
+    [style]="{width: '20px', height: '20px'}"
+  ></p-progressSpinner>
+</button>
