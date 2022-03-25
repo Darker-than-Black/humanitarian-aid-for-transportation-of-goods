@@ -4,4 +4,6 @@ export const notificationMessages = {
   updateSuccess: 'Дані оновлено',
   addDriverSuccess: 'Водія створено',
   addTransportSuccess: 'Транспорт створено',
+  setCoordinatorSuccess: 'Координатора встановлено',
+  setCoordinatorError: 'Помилка встановлення координатора',
 };

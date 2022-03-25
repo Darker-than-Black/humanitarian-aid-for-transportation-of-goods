@@ -18,23 +18,29 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { AppComponent } from './app.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
-import { FromTypeDirective } from './directives/from-type.directive';
+import { ModalContentDirective } from './directives/modal-content.directive';
 import { TabsComponent } from './components/tabs/tabs/tabs.component';
-import { DriverFormComponent } from './components/forms/driver-form/driver-form.component';
+import { DriverFormComponent } from './components/modal-contents/driver-form/driver-form.component';
 import { GoodsTableComponent } from './components/table/goods-table/goods-table.component';
-import { TransportFormComponent } from './components/forms/transport-form/transport-form.component';
+import { TransportFormComponent } from './components/modal-contents/transport-form/transport-form.component';
 import { GoodsTableDataComponent } from './components/table/goods-table-data/goods-table-data.component';
-import { StatusFormComponent } from './components/forms/status-form/status-form.component';
-import { LocationFormComponent } from './components/forms/location-form/location-form.component';
-import { CommentFormComponent } from './components/forms/comment-form/comment-form.component';
-import { ProvisionalDestinationFormComponent } from './components/forms/provisional-destination-form/provisional-destination-form.component';
+import { StatusFormComponent } from './components/modal-contents/status-form/status-form.component';
+import { LocationFormComponent } from './components/modal-contents/location-form/location-form.component';
+import { CommentFormComponent } from './components/modal-contents/comment-form/comment-form.component';
+import { ProvisionalDestinationFormComponent } from './components/modal-contents/provisional-destination-form/provisional-destination-form.component';
+import { SenderInfoComponent } from './components/modal-contents/sender-info/sender-info.component';
+import { RecipientInfoComponent } from './components/modal-contents/recipient-info/recipient-info.component';
+import { ItemsInfoComponent } from './components/modal-contents/items-info/items-info.component';
+import { PriorityFormComponent } from './components/modal-contents/priority-form/priority-form.component';
+import { AdditionInfoComponent } from './components/modal-contents/addition-info/addition-info.component';
+import { CoordinatorFormComponent } from './components/modal-contents/coordinator-form/coordinator-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TabComponent,
     TabsComponent,
-    FromTypeDirective,
+    ModalContentDirective,
     DriverFormComponent,
     GoodsTableComponent,
     TransportFormComponent,
@@ -43,6 +49,12 @@ import { ProvisionalDestinationFormComponent } from './components/forms/provisio
     LocationFormComponent,
     CommentFormComponent,
     ProvisionalDestinationFormComponent,
+    SenderInfoComponent,
+    RecipientInfoComponent,
+    ItemsInfoComponent,
+    PriorityFormComponent,
+    AdditionInfoComponent,
+    CoordinatorFormComponent,
   ],
   imports: [
     FormsModule,

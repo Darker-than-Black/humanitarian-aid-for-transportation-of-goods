@@ -1,10 +1,12 @@
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
 
 import { ApiService } from './services/api.service';
-import { FromTypeDirective } from './directives/from-type.directive';
-import { modalFormDictionary } from './configs/modalFormDictionary';
+import { modalDictionary } from './configs/modalDictionary';
+import { GOODS_TABLE_CONFIG } from './configs/tableConfigs';
 import { modalTitleDictionary } from './configs/modalTitleDictionary';
-import { FormComponent, OpenModalEvent, TransportationItem } from './type';
+import { ModalContentDirective } from './directives/modal-content.directive';
+import { DEFAULT_MODAL_SETTINGS, modalSettingsDictionary } from './configs/modalSettings';
+import { FormComponent, ModalSettings, OpenModalEvent, TransportationItem } from './type';
 import { TransportationItemDirector } from './services/TransportationItemHandler/TransportationItemDirector';
 
 const itemBuilder = new TransportationItemDirector();
@@ -20,8 +22,15 @@ export class AppComponent implements OnInit {
   loading: boolean = false;
   data: TransportationItem[] = [];
   modalTitle: string = '';
+  modalType: string = '';
+  goodsTableConfig = GOODS_TABLE_CONFIG;
 
-  @ViewChild(FromTypeDirective, {static: true}) fromDirective!: FromTypeDirective;
+  get modalSettings(): ModalSettings {
+    const settings = modalSettingsDictionary.get(this.modalType);
+    return settings || DEFAULT_MODAL_SETTINGS;
+  }
+
+  @ViewChild(ModalContentDirective, {static: true}) fromDirective!: ModalContentDirective;
 
   ngOnInit() {
     this.loading = true;
@@ -33,11 +42,12 @@ export class AppComponent implements OnInit {
       });
   }
 
-  openModal({type, item}: OpenModalEvent): void {
-    const component = modalFormDictionary.get(type);
+  openModal({type, item}: OpenModalEvent<TransportationItem>): void {
+    const component = modalDictionary.get(type);
 
     if (!component) { return; }
 
+    this.modalType = type;
     this.setTitle(type);
     this.setFormComponent(component, item);
   }
@@ -55,7 +65,6 @@ export class AppComponent implements OnInit {
     componentRef.instance.finally.subscribe(data => {
       this.setTitle('');
       this.data = this.data.map(el => el.id === data.id ? itemBuilder.build(data) : el);
-      console.log(itemBuilder.build(data));
     });
   }
 }

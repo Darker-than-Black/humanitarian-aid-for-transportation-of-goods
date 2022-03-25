@@ -1,8 +1,8 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[fromType]'
+  selector: '[modalContent]'
 })
-export class FromTypeDirective {
+export class ModalContentDirective {
   constructor(public viewContainerRef: ViewContainerRef) {}
 }

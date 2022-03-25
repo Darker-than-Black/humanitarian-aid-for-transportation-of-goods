@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
-import { NOTIFICATION_TYPES } from '../configs/notification-types';
+import { NOTIFICATION_TYPES } from '../configs/notificationTypes';
 
 const NOTIFICATION_TIMEOUT = 5000;
 

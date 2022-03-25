@@ -1,7 +1,7 @@
 import { set } from 'lodash';
 import { ApiTransportationItem, TransportationItem } from '../../type';
 import { ITransportationItemBuilder } from './ITransportationItemBuilder';
-import { getPreviewDriver, getPreviewTransport } from '../../utils';
+import { getPreviewDriver, getPreviewTransport, formatDate } from '../../utils';
 
 export class TransportationItemBuilder implements ITransportationItemBuilder {
   private data: TransportationItem | Record<string, any> = {};
@@ -27,6 +27,22 @@ export class TransportationItemBuilder implements ITransportationItemBuilder {
 
   setTransportName({transport}: ApiTransportationItem): ITransportationItemBuilder {
     this.setValue('transportName', getPreviewTransport(transport));
+    return this;
+  }
+
+  setItems({items}: ApiTransportationItem): ITransportationItemBuilder {
+    this.setValue('items', items || []);
+    return this;
+  }
+
+  setCreated({created}: ApiTransportationItem): ITransportationItemBuilder {
+    const date = created ? formatDate(created) : '';
+    this.setValue('created_format', date);
+    return this;
+  }
+
+  setAdditionLength({addition = []}: ApiTransportationItem): ITransportationItemBuilder {
+    this.setValue('additionLength', addition.length);
     return this;
   }
 

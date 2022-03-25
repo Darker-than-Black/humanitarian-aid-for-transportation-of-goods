@@ -1,18 +1,19 @@
 <app-goods-table
   [data]="data"
   [loading]="loading"
+  [config]="goodsTableConfig"
   (openModal)="openModal($event)"
 ></app-goods-table>
 
 <p-dialog
-  [(visible)]="modalTitle"
-  [modal]="true"
-  [maximizable]="true"
   [header]="modalTitle"
-  [style]="{width: '50vw'}"
-  [breakpoints]="{'960px': '75vw', '640px': '97vw'}"
+  [(visible)]="modalTitle"
+  [modal]="modalSettings.modal"
+  [style]="modalSettings.style"
+  [maximizable]="modalSettings.maximizable"
+  [breakpoints]="modalSettings.breakpoints"
 >
-  <ng-template fromType></ng-template>
+  <ng-template modalContent></ng-template>
 </p-dialog>
 
 <p-toast [baseZIndex]="5000" position="bottom-right"></p-toast>

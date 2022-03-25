@@ -1,0 +1,24 @@
+<p-listbox
+    [filter]="true"
+    [options]="priorities"
+    [(ngModel)]="selectedPriority"
+    [disabled]="loading"
+    optionLabel="name"
+></p-listbox>
+
+<button
+    [disabled]="!selectedPriority || loading"
+    pButton
+    type="button"
+    label="Зберегти"
+    class="p-button-success mt-5"
+    (click)="onSave()"
+>
+    <p-progressSpinner
+        *ngIf="loading"
+        strokeWidth="5"
+        animationDuration="3s"
+        class="mr-2"
+        [style]="{width: '20px', height: '20px'}"
+    ></p-progressSpinner>
+</button>

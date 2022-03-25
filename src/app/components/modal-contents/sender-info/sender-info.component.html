@@ -1,0 +1,6 @@
+<ul class="list">
+    <li *ngFor="let item of listConfig" class="list__item">
+        <span class="list__item-title">{{ item.label }}</span>
+        {{ fieldData(item.key) }}
+    </li>
+</ul>

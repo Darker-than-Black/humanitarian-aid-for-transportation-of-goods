@@ -1,0 +1,50 @@
+<p-listbox
+  [filter]="true"
+  [options]="statuses"
+  [(ngModel)]="selectedStatus"
+  [disabled]="loading"
+  optionLabel="name"
+  optionValue="code"
+></p-listbox>
+
+<form *ngIf="isAdditionStatus" class="grid p-fluid mt-3" [formGroup]="additionalForm">
+  <div class="col-12">
+    <label for="status_new_date"> Орієнтована дата і час відправки вантажу</label>
+    <input
+      pInputText
+      type="datetime-local"
+      id="status_new_date"
+      class="w-full"
+      formControlName="status_new_date"
+    />
+  </div>
+
+  <div class="col-12">
+    <label for="status_comment">Об'єм вільного місця та інші коментарі</label>
+    <textarea
+      [rows]="5"
+      pInputTextarea
+      id="status_comment"
+      formControlName="status_comment"
+      class="w-full"
+    ></textarea>
+  </div>
+</form>
+
+<button
+  [disabled]="disableBtn"
+  pButton
+  pRipple
+  type="button"
+  label="Зберегти"
+  class="p-button-success mt-5"
+  (click)="onSave()"
+>
+  <p-progressSpinner
+    *ngIf="loading"
+    strokeWidth="5"
+    animationDuration="3s"
+    class="mr-2"
+    [style]="{width: '20px', height: '20px'}"
+  ></p-progressSpinner>
+</button>

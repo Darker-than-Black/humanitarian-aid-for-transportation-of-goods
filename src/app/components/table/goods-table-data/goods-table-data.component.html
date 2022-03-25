@@ -1,13 +1,17 @@
 <div class="goods-table__item">
   <span class="goods-table__column-title">
-    {{ title }}
+    {{ config.header }}
   </span>
 
-  <ng-template #defaultTemplate>
-    {{ fieldData }}
-  </ng-template>
-
-  <ng-container
-    *ngTemplateOutlet="template || defaultTemplate; context: { $implicit: fieldData }"
+  <ng-container *ngTemplateOutlet="
+    template || defaultTemplate;
+    context: {
+      $implicit: previewData,
+      field: fieldData,
+      item: item,
+      config: config
+    }"
   ></ng-container>
 </div>
+
+<ng-template #defaultTemplate>{{ previewData }}</ng-template>

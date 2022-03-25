@@ -1,125 +1,57 @@
+<div #upScrollRef class="up-scroll">
+  <div #upScrollRowRef class="up-scroll__row"></div>
+</div>
+
 <p-table
+  #tableRef
   [value]="data"
-  [columns]="columns"
+  [columns]="config"
   [rows]="25"
   [showCurrentPageReport]="true"
-  [rowsPerPageOptions]="[25,50,100]"
+  [rowsPerPageOptions]="[10,25,50,100]"
   [loading]="loading"
   [paginator]="true"
   [filterDelay]="0"
+  [globalFilterFields]="filterableFields"
+  [scrollable]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   styleClass="p-datatable-customers"
+  class="goods-table"
+  scrollHeight="800px"
 >
+  <ng-template pTemplate="caption">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        type="text"
+        placeholder="Search keyword"
+        (input)="tableRef.filterGlobal($any($event.target).value, 'contains')"
+      />
+    </span>
+  </ng-template>
+
   <ng-template pTemplate="header" let-columns>
     <tr>
+      <th *ngFor="let col of columns" class="goods-table__header">{{ col.header }}</th>
+    </tr>
+
+    <tr *ngIf="filterableFields.length">
       <th *ngFor="let col of columns">
-        {{ col.header }}
+        <div *ngIf="col.filterable" class="goods-table__input">
+          <p-columnFilter type="text" [field]="col.field"></p-columnFilter>
+        </div>
       </th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-item>
     <tr class="goods-table__row">
-      <td class="goods-table__td">
-        <app-goods-table-data [columnsConfig]="columns" [item]="item" path="id"></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <app-goods-table-data [columnsConfig]="columns" [item]="item" path="name"></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <app-goods-table-data [columnsConfig]="columns" [item]="item" path="recipient"></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <app-goods-table-data [columnsConfig]="columns" [item]="item" path="sender"></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <app-goods-table-data [columnsConfig]="columns" [item]="item" path="volume"></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <app-goods-table-data [columnsConfig]="columns" [item]="item" path="temperature"></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <ng-template #statusTemplate let-data>
-          <p-button (click)="open(modalTypes.STATUS, item)" styleClass="p-button-text text-sm md:text-base p-0">
-            {{ data }}
-          </p-button>
-        </ng-template>
-
+      <td *ngFor="let column of config" class="goods-table__td">
         <app-goods-table-data
-          [template]="statusTemplate"
-          [columnsConfig]="columns"
+          [template]="customTemplate(column, item)"
+          [config]="column"
           [item]="item"
-          path="status_name"
-        ></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <ng-template #transportTemplate let-data>
-          <p-button (click)="open(modalTypes.TRANSPORT, item)" styleClass="p-button-text text-sm md:text-base p-0">
-            {{ data }}
-          </p-button>
-        </ng-template>
-
-        <app-goods-table-data
-          [columnsConfig]="columns"
-          [item]="item"
-          [template]="transportTemplate"
-          path="transportName"
-        ></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <ng-template #driveTemplate let-data>
-          <p-button (click)="open(modalTypes.DRIVER, item)" styleClass="p-button-text text-sm md:text-base p-0">
-            {{ data }}
-          </p-button>
-        </ng-template>
-
-        <app-goods-table-data
-          [template]="driveTemplate"
-          [columnsConfig]="columns"
-          [item]="item"
-          path="driverName"
-        ></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <ng-template #provisionalDestinationTemplate let-data>
-          <p-button (click)="open(modalTypes.PROVISIONAL_DESTINATION, item)" styleClass="p-button-text text-sm md:text-base p-0">
-            {{ data }}
-          </p-button>
-        </ng-template>
-
-        <app-goods-table-data
-          [template]="provisionalDestinationTemplate"
-          [columnsConfig]="columns"
-          [item]="item"
-          path="provisional_destination"
-        ></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <ng-template #locationTemplate let-data>
-          <p-button (click)="open(modalTypes.LOCATION, item)" styleClass="p-button-text text-sm md:text-base p-0">
-            {{ data }}
-          </p-button>
-        </ng-template>
-
-        <app-goods-table-data
-          [template]="locationTemplate"
-          [columnsConfig]="columns"
-          [item]="item"
-          path="location"
-        ></app-goods-table-data>
-      </td>
-      <td class="goods-table__td">
-        <ng-template #commentTemplate let-data>
-          <p-button (click)="open(modalTypes.COMMENT, item)" styleClass="p-button-text text-sm md:text-base p-0">
-            {{ data }}
-          </p-button>
-        </ng-template>
-
-        <app-goods-table-data
-          [template]="commentTemplate"
-          [columnsConfig]="columns"
-          [item]="item"
-          path="comment"
         ></app-goods-table-data>
       </td>
     </tr>
@@ -131,3 +63,35 @@
     </tr>
   </ng-template>
 </p-table>
+
+<ng-template #additionTemplate let-field="field" let-item="item" let-config="config">
+  <button
+    pButton
+    class="text-white text-left"
+    [label]="field ? field : '0'"
+    [disabled]="!field"
+    [style.backgroundColor]="field ? '#23308e' : '#808080'"
+    (click)="open(config.modalType, item)"
+  ></button>
+</ng-template>
+
+<ng-template #priorityTemplate let-item="item" let-config="config">
+  <button
+    pButton
+    class="p-button-text text-900 text-left goods-table__btn p-2"
+    [style.backgroundColor]="item.priority.color"
+    (click)="open(config.modalType, item)"
+  >
+    {{ item.priority.name }}
+  </button>
+</ng-template>
+
+<ng-template #modalTemplate let-data let-config="config" let-item="item">
+  <button
+    pButton
+    class="p-button-text text-left goods-table__btn p-0"
+    (click)="open(config.modalType, item)"
+  >{{ data }}</button>
+</ng-template>
+
+<ng-template #defaultTemplate let-data>{{ data }}</ng-template>
