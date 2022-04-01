@@ -9,7 +9,8 @@ import { notificationMessages } from '../configs/notificationMessages';
 import {
   ApiTransportationItem,
   Driver,
-  DriverForm, Priority,
+  DriverForm,
+  Priority,
   ServerResponse,
   Status,
   Transport,

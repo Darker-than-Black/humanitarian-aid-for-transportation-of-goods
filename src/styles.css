@@ -15,9 +15,3 @@
     font-weight: bold;
     flex: 0 0 40%;
 }
-
-@media screen and (min-width: 960px) {
-    .goods-table .p-datatable-header {
-        display: none;
-    }
-}

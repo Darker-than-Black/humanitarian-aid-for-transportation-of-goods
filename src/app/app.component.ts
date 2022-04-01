@@ -1,12 +1,13 @@
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
 
+import { MODAL_TYPES } from './configs/modalTypes';
 import { ApiService } from './services/api.service';
 import { modalDictionary } from './configs/modalDictionary';
 import { GOODS_TABLE_CONFIG } from './configs/tableConfigs';
 import { modalTitleDictionary } from './configs/modalTitleDictionary';
 import { ModalContentDirective } from './directives/modal-content.directive';
 import { DEFAULT_MODAL_SETTINGS, modalSettingsDictionary } from './configs/modalSettings';
-import { FormComponent, ModalSettings, OpenModalEvent, TransportationItem } from './type';
+import { FormComponent, ModalSettings, TransportationItem, TableColumnConfig } from './type';
 import { TransportationItemDirector } from './services/TransportationItemHandler/TransportationItemDirector';
 
 const itemBuilder = new TransportationItemDirector();
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
   data: TransportationItem[] = [];
   modalTitle: string = '';
   modalType: string = '';
-  goodsTableConfig = GOODS_TABLE_CONFIG;
+  tableConfig = GOODS_TABLE_CONFIG;
 
   get modalSettings(): ModalSettings {
     const settings = modalSettingsDictionary.get(this.modalType);
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
       });
   }
 
-  openModal({type, item}: OpenModalEvent<TransportationItem>): void {
+  openModal(type: string, item:TransportationItem): void {
     const component = modalDictionary.get(type);
 
     if (!component) { return; }
@@ -50,6 +51,10 @@ export class AppComponent implements OnInit {
     this.modalType = type;
     this.setTitle(type);
     this.setFormComponent(component, item);
+  }
+
+  defaultModalTemplate({key}: TableColumnConfig): boolean {
+    return ['recipient', 'sender', 'coordinator.name', 'status_name', 'transportName', 'driverName', 'provisional_destination', 'location', 'comment'].includes(key);
   }
 
   private setTitle(type: string): void {

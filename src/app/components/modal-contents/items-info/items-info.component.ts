@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MedTableSettings } from 'med-table';
 
 import { FormMixin } from '../../../mixins/FormMixin';
 import { FormComponent, TableColumnConfig } from '../../../type';
@@ -11,4 +12,7 @@ import { ITEMS_TABLE_CONFIG } from '../../../configs/tableConfigs';
 })
 export class ItemsInfoComponent extends FormMixin implements FormComponent {
   config: TableColumnConfig[] = ITEMS_TABLE_CONFIG;
+  settings: MedTableSettings = {
+    sticky: false,
+  };
 }

@@ -15,15 +15,14 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MedTableModule } from 'med-table';
 
 import { AppComponent } from './app.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { ModalContentDirective } from './directives/modal-content.directive';
 import { TabsComponent } from './components/tabs/tabs/tabs.component';
 import { DriverFormComponent } from './components/modal-contents/driver-form/driver-form.component';
-import { GoodsTableComponent } from './components/table/goods-table/goods-table.component';
 import { TransportFormComponent } from './components/modal-contents/transport-form/transport-form.component';
-import { GoodsTableDataComponent } from './components/table/goods-table-data/goods-table-data.component';
 import { StatusFormComponent } from './components/modal-contents/status-form/status-form.component';
 import { LocationFormComponent } from './components/modal-contents/location-form/location-form.component';
 import { CommentFormComponent } from './components/modal-contents/comment-form/comment-form.component';
@@ -42,9 +41,7 @@ import { CoordinatorFormComponent } from './components/modal-contents/coordinato
     TabsComponent,
     ModalContentDirective,
     DriverFormComponent,
-    GoodsTableComponent,
     TransportFormComponent,
-    GoodsTableDataComponent,
     StatusFormComponent,
     LocationFormComponent,
     CommentFormComponent,
@@ -57,6 +54,7 @@ import { CoordinatorFormComponent } from './components/modal-contents/coordinato
     CoordinatorFormComponent,
   ],
   imports: [
+    MedTableModule,
     FormsModule,
     ToastModule,
     TableModule,

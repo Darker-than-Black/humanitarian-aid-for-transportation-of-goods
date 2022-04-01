@@ -1,5 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { MODAL_TYPES } from './configs/modalTypes';
+import {MedTableColumnConfig} from "med-table";
 
 export interface ApiTransportationItem {
   created?: string
@@ -81,23 +82,13 @@ export interface Item {
   name: string
 }
 
-export interface TableColumnConfig {
-  field: string
-  header: string
-  filterable?: boolean
+export interface TableColumnConfig extends MedTableColumnConfig {
   modalType?: MODAL_TYPES
-  viewHandler?: (data: any) => string | number
-  modalVisibleHandler?:(item: any) => boolean
 }
 
 export interface ViewListItem {
   key: string
   label: string
-}
-
-export interface OpenModalEvent<T> {
-  type: MODAL_TYPES
-  item: T
 }
 
 export interface ModalSettings {
