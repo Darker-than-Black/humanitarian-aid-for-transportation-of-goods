@@ -1,6 +1,5 @@
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
 
-import { MODAL_TYPES } from './configs/modalTypes';
 import { ApiService } from './services/api.service';
 import { modalDictionary } from './configs/modalDictionary';
 import { GOODS_TABLE_CONFIG } from './configs/tableConfigs';
@@ -36,11 +35,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
 
-    this.apiService.getTransportationOfGoods()
-      .subscribe((data) => {
-        this.data = data.map(item => itemBuilder.build(item));
-        this.loading = false;
-      });
+    this.apiService.getTransportationOfGoods().subscribe((data) => {
+      this.data = data.map(item => itemBuilder.build(item));
+      this.loading = false;
+    });
   }
 
   openModal(type: string, item:TransportationItem): void {
@@ -53,8 +51,8 @@ export class AppComponent implements OnInit {
     this.setFormComponent(component, item);
   }
 
-  defaultModalTemplate({key}: TableColumnConfig): boolean {
-    return ['recipient', 'sender', 'coordinator.name', 'status_name', 'transportName', 'driverName', 'provisional_destination', 'location', 'comment'].includes(key);
+  defaultModalTemplate({isDefaultModalTemplate}: TableColumnConfig): boolean {
+    return Boolean(isDefaultModalTemplate);
   }
 
   private setTitle(type: string): void {

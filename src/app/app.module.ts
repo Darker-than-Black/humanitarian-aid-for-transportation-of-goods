@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ListboxModule } from 'primeng/listbox';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -63,6 +64,7 @@ import { CoordinatorFormComponent } from './components/modal-contents/coordinato
     ListboxModule,
     BrowserModule,
     CheckboxModule,
+    DropdownModule,
     InputTextModule,
     InputMaskModule,
     HttpClientModule,

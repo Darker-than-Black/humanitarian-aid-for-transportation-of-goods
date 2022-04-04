@@ -1,8 +1,10 @@
 import { ApiTransportationItem, TransportationItem } from '../../type';
-import { ITransportationItemDirector } from './ITransportationItemDirector';
-import { ITransportationItemBuilder } from './ITransportationItemBuilder';
-import { TransportationItemBuilder } from './TransportationItemBuilder';
+import { TransportationItemBuilder, ITransportationItemBuilder } from './TransportationItemBuilder';
 import { transportationItemBuilderMethods } from '../../configs/transportationItemBuilderMethods';
+
+export interface ITransportationItemDirector {
+  build(i: ApiTransportationItem): TransportationItem
+}
 
 export class TransportationItemDirector implements ITransportationItemDirector {
   build(item: ApiTransportationItem): TransportationItem {

@@ -1,3 +1,4 @@
+import { FILTER_TYPES } from 'med-table';
 import { MODAL_TYPES } from './modalTypes';
 import { TableColumnConfig } from '../type';
 
@@ -22,31 +23,44 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
   {
     label: 'Дата створення партії',
     key: 'created_format',
+    sortKey: 'created',
     filterable: true,
+    filterType: FILTER_TYPES.DATE,
   },
   {
     label: 'Отримувач',
     key: 'recipient',
     filterable: true,
     modalType: MODAL_TYPES.RECIPIENT,
+    isDefaultModalTemplate: true,
+    filterType: FILTER_TYPES.SELECT,
   },
   {
     label: 'Відправник',
     key: 'sender',
     filterable: true,
     modalType: MODAL_TYPES.SENDER,
+    isDefaultModalTemplate: true,
+  },
+  {
+    label: 'Регіон відправника',
+    key: 'sender_region',
+    filterable: true,
+    filterType: FILTER_TYPES.SELECT,
   },
   {
     label: 'Координатор',
     key: 'coordinator.name',
     filterable: true,
     modalType: MODAL_TYPES.COORDINATOR,
+    isDefaultModalTemplate: true,
   },
   {
     label: 'Статус',
     key: 'status_name',
     filterable: true,
     modalType: MODAL_TYPES.STATUS,
+    isDefaultModalTemplate: true,
   },
   {
     label: 'Довантаження ',
@@ -56,7 +70,7 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     defaultValue: '',
   },
   {
-    label: 'Об’єм партії, м3',
+    label: 'Об’єм партії, палети',
     key: 'volume',
     filterable: true,
   },
@@ -75,30 +89,35 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     key: 'transportName',
     filterable: true,
     modalType: MODAL_TYPES.TRANSPORT,
+    isDefaultModalTemplate: true,
   },
   {
     label: 'Водій',
     key: 'driverName',
     filterable: true,
     modalType: MODAL_TYPES.DRIVER,
+    isDefaultModalTemplate: true,
   },
   {
     label: 'Проміжний пункт призначення',
     key: 'provisional_destination',
     filterable: true,
     modalType: MODAL_TYPES.PROVISIONAL_DESTINATION,
+    isDefaultModalTemplate: true,
   },
   {
     label: 'Поточне місцезнаходження',
     key: 'location',
     filterable: true,
     modalType: MODAL_TYPES.LOCATION,
+    isDefaultModalTemplate: true,
   },
   {
     label: 'Коментар',
     key: 'comment',
     filterable: true,
     modalType: MODAL_TYPES.COMMENT,
+    isDefaultModalTemplate: true,
   },
 ];
 
@@ -135,7 +154,7 @@ export const ADDITION_TABLE_CONFIG: TableColumnConfig[] = [
     label: 'Контактний телефон відправника',
   },
   {
-    label: 'Об’єм партії, м3',
+    label: 'Об’єм партії, палети',
     key: 'volume',
   },
   {

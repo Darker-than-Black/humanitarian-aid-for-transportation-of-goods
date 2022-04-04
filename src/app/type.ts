@@ -7,7 +7,6 @@ export interface ApiTransportationItem {
   comment?: string
   location?: string
   provisional_destination?: string
-  status_name: string
   id: string
   name: string
   total: string
@@ -15,6 +14,7 @@ export interface ApiTransportationItem {
   driver: Driver
   volume?: string
   recipient: string
+  status_name: string
   status: string
   temperature: boolean
   transport: Transport
@@ -44,13 +44,13 @@ export interface TransportationItem {
   location: string
   provisional_destination: string
   status_name: string
+  status: string
   id: string
   name: string
   total: string
   sender: string
   volume: string
   recipient: string
-  status: string
   temperature: boolean
   driver: Driver
   transport: Transport
@@ -84,6 +84,7 @@ export interface Item {
 
 export interface TableColumnConfig extends MedTableColumnConfig {
   modalType?: MODAL_TYPES
+  isDefaultModalTemplate?: boolean
 }
 
 export interface ViewListItem {

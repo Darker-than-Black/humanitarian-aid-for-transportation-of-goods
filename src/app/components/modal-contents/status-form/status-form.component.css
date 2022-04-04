@@ -1,0 +1,19 @@
+.select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.select__arrow {
+     border: solid var(--gray-600);
+     border-width: 0 2px 2px 0;
+     display: inline-block;
+     padding: 3px;
+     transform: rotate(45deg) translate(-12px, 12px);
+ }
+
+.select__select {
+    width: 100%;
+    padding-right: 20px;
+ }
