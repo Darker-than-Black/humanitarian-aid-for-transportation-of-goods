@@ -35,7 +35,9 @@ export class UrlBuilder {
   }
 
   private devMode(): UrlBuilder {
-    this.addQueryParam('dev', Number(isDevMode()));
+    if (isDevMode()) {
+      this.addQueryParam('dev', 1);
+    }
     return this;
   }
 
