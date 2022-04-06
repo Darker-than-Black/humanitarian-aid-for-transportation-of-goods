@@ -3,9 +3,32 @@
   [loading]="loading"
   [config]="tableConfig"
   [tableDataTemplate]="tableDataTemplate"
+  [toolbarTemplate]="toolbarTemplate"
 >
+  <ng-template #toolbarTemplate>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Завантажити шляховий лист"
+      icon="pi pi-file-excel"
+      class="p-button-rounded p-button-success"
+      [disabled]="!selectedIds.length"
+      (click)="exportTravelLetter()"
+    ></button>
+  </ng-template>
+
   <ng-template #tableDataTemplate let-data let-item="item" let-config="config">
     <ng-container [ngSwitch]="config.key">
+      <ng-container *ngSwitchCase="'id'">
+        <p-checkbox
+            name="ids"
+            [value]="data"
+            [label]="data"
+            [(ngModel)]="selectedIds"
+        ></p-checkbox>
+      </ng-container>
+
       <ng-container *ngSwitchCase="'name'">
         <button
           *ngIf="item.items && item.items.length"

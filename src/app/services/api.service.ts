@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 
 import * as ROUTES from '../configs/apiRoutes';
+import { UrlBuilder } from './url-builder';
 import { NotificationService } from './notification.service';
 import { NOTIFICATION_TYPES } from '../configs/notificationTypes';
 import { notificationMessages } from '../configs/notificationMessages';
 import {
   ApiTransportationItem,
+  ApiTravelLetter,
   Driver,
   DriverForm,
   Priority,
@@ -24,7 +26,7 @@ import {
 export class ApiService {
   constructor(private http: HttpClient, private notification: NotificationService) {
     Object.entries(ROUTES).forEach(([key, url]) => {
-      this.routes[key] = this.addDevMode(url);
+      this.routes[key] = new UrlBuilder(url).url;
     });
   }
 
@@ -68,6 +70,13 @@ export class ApiService {
     );
   }
 
+  getTravelLetters(ids: string[]): Observable<ApiTravelLetter> {
+    return this.http.post<ServerResponse<ApiTravelLetter>>(this.routes['GET_TRAVEL_LETTERS'], null,{ params: { id: ids.join(',') } }).pipe(
+        map(({ data }) => data),
+        catchError(this.handleError<any>(notificationMessages.serverError, 'getTravelLetters', {})),
+    )
+  }
+
   updateTransportationOfItem(data: TransportationItem): Observable<ApiTransportationItem> {
     return this.http.post<ServerResponse<ApiTransportationItem>>(this.routes['UPDATE_TRANSPORTATION_OF_ITEM'], data, this.httpOptions).pipe(
       map(({data}) => data),
@@ -105,10 +114,6 @@ export class ApiService {
       }),
       catchError(this.handleError<undefined>(notificationMessages.serverError, 'addTransport')),
     );
-  }
-
-  private addDevMode(url: string): string {
-    return isDevMode() ? `${url}&dev=1` : url;
   }
 
   private handleError<T>(message: string, operation = 'operation', result?: T) {

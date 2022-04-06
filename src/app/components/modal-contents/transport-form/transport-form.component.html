@@ -6,6 +6,7 @@
       [(ngModel)]="selectedTransport"
       [disabled]="loading"
       optionLabel="label"
+      (onDblClick)="updateItem({ transport: selectedTransport })"
     ></p-listbox>
 
     <button
@@ -45,28 +46,29 @@
           id="name"
           type="text"
           pInputText
+          [inputPattern]="namePattern"
           formControlName="name"
           class="w-full"
         />
       </div>
 
       <div class="col-12">
-        <label for="capacity">Вантажопідйомність</label>
+        <label for="capacity">Вантажопідйомність, кг</label>
         <input
           id="capacity"
-          type="text"
           pInputText
+          type="number"
           formControlName="capacity"
           class="w-full"
         />
       </div>
 
       <div class="col-12">
-        <label for="volume">Об’єм вантажного відділення</label>
+        <label for="volume">Об’єм вантажного відділення, палети</label>
         <input
-          type="text"
           pInputText
           id="volume"
+          type="number"
           formControlName="volume"
           class="w-full"
         />

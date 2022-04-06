@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import { PATTERN_TYPES } from 'med-dynamic-form';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { FormComponent, TransportationItem, Transport } from '../../../type';
+import { FormComponent, Transport } from '../../../type';
 import { ApiService } from '../../../services/api.service';
 import { getPreviewTransport } from '../../../utils';
 import {FormMixin} from "../../../mixins/FormMixin";
@@ -17,6 +18,8 @@ export class TransportFormComponent extends FormMixin implements FormComponent, 
   constructor(apiService: ApiService, private fb: FormBuilder) {
     super(apiService);
   }
+
+  namePattern = PATTERN_TYPES.LATIN_AND_NUMBER;
 
   // change transport
   transports: Array<Transport & {label: string}> = [];

@@ -6,6 +6,7 @@
       [(ngModel)]="selectedDriver"
       [disabled]="loading"
       optionLabel="label"
+      (onDblClick)="updateItem({driver: selectedDriver})"
     ></p-listbox>
 
     <button
@@ -32,9 +33,8 @@
       <div class="col-12">
         <span>Ім’я</span>
         <input
-          type="text"
-          id="inputtext"
           pInputText
+          type="text"
           formControlName="name"
           class="w-full"
         />
@@ -42,12 +42,13 @@
 
       <div class="col-12">
         <span>Телефон</span>
-        <p-inputMask
+        <input
+          type="text"
+          pInputText
           formControlName="contact_phone"
-          mask="+(999) 999-9999"
           placeholder="+(999) 999-9999"
           class="w-full"
-        ></p-inputMask>
+        />
       </div>
 
       <div class="col-12">

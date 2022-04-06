@@ -6,4 +6,6 @@ export const notificationMessages = {
   addTransportSuccess: 'Транспорт створено',
   setCoordinatorSuccess: 'Координатора встановлено',
   setCoordinatorError: 'Помилка встановлення координатора',
+  exportTravelLetterSuccess: 'Маршрутний лист завантажено',
+  exportTravelLetterError: 'Помилка завантаження маршрутного листа',
 };

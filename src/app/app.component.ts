@@ -1,15 +1,21 @@
-import { Component, OnInit, Type, ViewChild } from '@angular/core';
+import {Component, OnInit, Type, ViewChild} from '@angular/core';
 
-import { ApiService } from './services/api.service';
-import { modalDictionary } from './configs/modalDictionary';
-import { GOODS_TABLE_CONFIG } from './configs/tableConfigs';
-import { modalTitleDictionary } from './configs/modalTitleDictionary';
-import { ModalContentDirective } from './directives/modal-content.directive';
-import { DEFAULT_MODAL_SETTINGS, modalSettingsDictionary } from './configs/modalSettings';
-import { FormComponent, ModalSettings, TransportationItem, TableColumnConfig } from './type';
-import { TransportationItemDirector } from './services/TransportationItemHandler/TransportationItemDirector';
+import {ApiService} from './services/api.service';
+import {modalDictionary} from './configs/modalDictionary';
+import {GOODS_TABLE_CONFIG} from './configs/tableConfigs';
+import {NotificationService} from './services/notification.service';
+import {modalTitleDictionary} from './configs/modalTitleDictionary';
+import {ModalContentDirective} from './directives/modal-content.directive';
+import {DEFAULT_MODAL_SETTINGS, modalSettingsDictionary} from './configs/modalSettings';
+import {FormComponent, ModalSettings, TableColumnConfig, TransportationItem} from './type';
+import {TransportationItemDirector} from './services/TransportationItemHandler/TransportationItemDirector';
+import {TravelLetterBuilder} from './services/TravelLetterHandler/TravelLetterBuilder';
+import {SheetsGenerator} from './services/TravelLetterHandler/SheetsGenerator/SheetsGenerator';
+import {notificationMessages} from './configs/notificationMessages';
+import {NOTIFICATION_TYPES} from './configs/notificationTypes';
 
 const itemBuilder = new TransportationItemDirector();
+const travelLetterBuilder = new TravelLetterBuilder();
 
 @Component({
   selector: 'app-root',
@@ -17,13 +23,14 @@ const itemBuilder = new TransportationItemDirector();
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private notification: NotificationService) {}
 
   loading: boolean = false;
   data: TransportationItem[] = [];
   modalTitle: string = '';
   modalType: string = '';
   tableConfig = GOODS_TABLE_CONFIG;
+  selectedIds: string[] = [];
 
   get modalSettings(): ModalSettings {
     const settings = modalSettingsDictionary.get(this.modalType);
@@ -53,6 +60,19 @@ export class AppComponent implements OnInit {
 
   defaultModalTemplate({isDefaultModalTemplate}: TableColumnConfig): boolean {
     return Boolean(isDefaultModalTemplate);
+  }
+
+  exportTravelLetter(): void {
+    this.apiService.getTravelLetters(this.selectedIds).subscribe(data => {
+      try {
+        const list = travelLetterBuilder.build(data);
+        const generator = new SheetsGenerator(list);
+        generator.generate('Маршрутний_лист', travelLetterBuilder.dateRange);
+        this.notification.add(notificationMessages.exportTravelLetterSuccess, NOTIFICATION_TYPES.SUCCESS);
+      } catch {
+        this.notification.add(notificationMessages.exportTravelLetterError, NOTIFICATION_TYPES.ERROR);
+      }
+    })
   }
 
   private setTitle(type: string): void {

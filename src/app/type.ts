@@ -171,3 +171,71 @@ export interface Addition {
   volume?: string
   weight?: string
 }
+
+/*       TravelLetter       */
+export interface BatchItem {
+  id?: string
+  name?: string
+  quantity?: string
+}
+
+export interface Batch {
+  volume?: string
+  weight?: string
+  items: BatchItem[]
+}
+
+export interface Details {
+  name?: string
+  phone?: string
+  contact?: string
+  address?: string
+}
+
+export interface SenderRecipient {
+  details: Details
+  batches: Batch[]
+}
+
+export interface Sender {
+  details: Details
+  recipients: SenderRecipient[]
+}
+
+export interface Driver {
+  name?: string
+  phone?: string
+}
+
+export interface TravelLetter {
+  drivers: Driver[]
+  senders: Sender[]
+  details: {
+    type?: string,
+    num?: string
+  }
+}
+
+export interface ApiTravelLetter {
+  details?: {
+    type?: string,
+    num?: string
+  }
+  drivers?: Record<string, Driver>
+  senders?: Record<string, {
+    details?: Details
+    recipients?: Record<string, {
+      details?: Details
+      batches?: Record<string, {
+        volume?: string
+        weight?: string
+        items?: BatchItem[]
+      }>
+    }>
+  }>
+}
+
+export interface DateRange {
+  start: string
+  end: string
+}

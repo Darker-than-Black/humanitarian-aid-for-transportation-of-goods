@@ -12,11 +12,12 @@ import { ButtonModule } from 'primeng/button';
 import { ListboxModule } from 'primeng/listbox';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 import { MedTableModule } from 'med-table';
+import { MedDynamicFormModule } from 'med-dynamic-form';
 
 import { AppComponent } from './app.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
@@ -56,6 +57,7 @@ import { CoordinatorFormComponent } from './components/modal-contents/coordinato
   ],
   imports: [
     MedTableModule,
+    MedDynamicFormModule,
     FormsModule,
     ToastModule,
     TableModule,
@@ -66,7 +68,6 @@ import { CoordinatorFormComponent } from './components/modal-contents/coordinato
     CheckboxModule,
     DropdownModule,
     InputTextModule,
-    InputMaskModule,
     HttpClientModule,
     ReactiveFormsModule,
     InputTextareaModule,
