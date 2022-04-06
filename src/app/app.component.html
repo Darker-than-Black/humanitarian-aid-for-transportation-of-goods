@@ -1,11 +1,5 @@
-<med-table
-  [data]="data"
-  [loading]="loading"
-  [config]="tableConfig"
-  [tableDataTemplate]="tableDataTemplate"
-  [toolbarTemplate]="toolbarTemplate"
->
-  <ng-template #toolbarTemplate>
+<med-table [data]="data" [loading]="loading" [config]="tableConfig">
+  <ng-template mTemplate="paginator">
     <button
       pButton
       pRipple
@@ -18,7 +12,7 @@
     ></button>
   </ng-template>
 
-  <ng-template #tableDataTemplate let-data let-item="item" let-config="config">
+  <ng-template mTemplate="tableData" let-data let-item="item" let-config="config">
     <ng-container [ngSwitch]="config.key">
       <ng-container *ngSwitchCase="'id'">
         <p-checkbox
