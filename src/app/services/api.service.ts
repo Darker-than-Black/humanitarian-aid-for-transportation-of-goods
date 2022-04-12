@@ -11,7 +11,7 @@ import {
   ApiTransportationItem,
   ApiTravelLetter,
   Driver,
-  DriverForm,
+  DriverForm, GetDataServerResponse,
   Priority,
   ServerResponse,
   Status,
@@ -35,10 +35,9 @@ export class ApiService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  getTransportationOfGoods(): Observable<ApiTransportationItem[]> {
-    return this.http.get<ServerResponse<ApiTransportationItem[]>>(this.routes['GET_TRANSPORTATION_OF_GOODS']).pipe(
-      map(({ data }) => data),
-      catchError(this.handleError<ApiTransportationItem[]>(notificationMessages.serverError, 'getTransportationOfGoods', [])),
+  getTransportationOfGoods(): Observable<GetDataServerResponse> {
+    return this.http.get<GetDataServerResponse>(this.routes['GET_TRANSPORTATION_OF_GOODS']).pipe(
+      catchError(this.handleError<GetDataServerResponse>(notificationMessages.serverError, 'getTransportationOfGoods', { readonly: true, success: false, data: [] })),
     );
   }
 

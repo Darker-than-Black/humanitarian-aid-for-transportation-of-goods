@@ -13,6 +13,7 @@ import {TravelLetterBuilder} from './services/TravelLetterHandler/TravelLetterBu
 import {SheetsGenerator} from './services/TravelLetterHandler/SheetsGenerator/SheetsGenerator';
 import {notificationMessages} from './configs/notificationMessages';
 import {NOTIFICATION_TYPES} from './configs/notificationTypes';
+import {READONLY_KEYS} from './configs/readonlyKeys';
 
 const itemBuilder = new TransportationItemDirector();
 const travelLetterBuilder = new TravelLetterBuilder();
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
   modalType: string = '';
   tableConfig = GOODS_TABLE_CONFIG;
   selectedIds: string[] = [];
+  readonly: boolean = false;
 
   get modalSettings(): ModalSettings {
     const settings = modalSettingsDictionary.get(this.modalType);
@@ -42,8 +44,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
 
-    this.apiService.getTransportationOfGoods().subscribe((data) => {
-      this.data = data.map(item => itemBuilder.build(item));
+    this.apiService.getTransportationOfGoods().subscribe(({data, readonly}) => {
+      this.data = data.map(item => itemBuilder.build(item, readonly));
+      this.readonly = readonly;
       this.loading = false;
     });
   }
@@ -58,8 +61,8 @@ export class AppComponent implements OnInit {
     this.setFormComponent(component, item);
   }
 
-  defaultModalTemplate({isDefaultModalTemplate}: TableColumnConfig): boolean {
-    return Boolean(isDefaultModalTemplate);
+  defaultModalTemplate({isDefaultModalTemplate, key}: TableColumnConfig, {readonly}: TransportationItem): boolean {
+    return Boolean(isDefaultModalTemplate) && !(READONLY_KEYS.includes(key) && readonly);
   }
 
   exportTravelLetter(): void {
@@ -87,7 +90,7 @@ export class AppComponent implements OnInit {
     // auto close modal
     componentRef.instance.finally.subscribe(data => {
       this.setTitle('');
-      this.data = this.data.map(el => el.id === data.id ? itemBuilder.build(data) : el);
+      this.data = this.data.map(el => el.id === data.id ? itemBuilder.build(data, this.readonly) : el);
     });
   }
 }

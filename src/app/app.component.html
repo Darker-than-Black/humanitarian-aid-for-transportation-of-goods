@@ -16,10 +16,10 @@
     <ng-container [ngSwitch]="config.key">
       <ng-container *ngSwitchCase="'id'">
         <p-checkbox
-            name="ids"
-            [value]="data"
-            [label]="data"
-            [(ngModel)]="selectedIds"
+          name="ids"
+          [value]="data"
+          [label]="data"
+          [(ngModel)]="selectedIds"
         ></p-checkbox>
       </ng-container>
 
@@ -36,6 +36,7 @@
         *ngSwitchCase="'priority.name'"
         pButton
         class="p-button-text text-900 text-left table__btn p-2"
+        [disabled]="item.readonly"
         [style.backgroundColor]="item.priority.color"
         (click)="openModal(config.modalType, item)"
       >{{ data }}</button>
@@ -52,7 +53,7 @@
     </ng-container>
 
     <button
-      *ngIf="defaultModalTemplate(config)"
+      *ngIf="defaultModalTemplate(config, item)"
       pButton
       class="p-button-text text-left goods-table__btn p-0"
       (click)="openModal(config.modalType, item)"

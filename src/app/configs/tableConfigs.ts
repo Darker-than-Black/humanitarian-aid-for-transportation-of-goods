@@ -63,7 +63,7 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     isDefaultModalTemplate: true,
   },
   {
-    label: 'Довантаження ',
+    label: 'Довантаження',
     key: 'additionLength',
     filterable: true,
     modalType: MODAL_TYPES.ADDITION,

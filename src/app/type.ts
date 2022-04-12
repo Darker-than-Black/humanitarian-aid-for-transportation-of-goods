@@ -72,6 +72,7 @@ export interface TransportationItem {
   priority: Priority
   addition?: Addition[]
   additionLength: string
+  readonly: boolean
 }
 
 export interface Item {
@@ -108,6 +109,10 @@ export interface ServerResponse<T> {
   success: boolean
   error?: string
   data: T
+}
+
+export interface GetDataServerResponse extends ServerResponse<ApiTransportationItem[]> {
+  readonly: boolean
 }
 
 export interface Driver {

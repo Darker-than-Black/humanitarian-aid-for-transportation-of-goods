@@ -5,6 +5,7 @@ import { getPreviewDriver, getPreviewTransport, formatDate } from '../../utils';
 export interface ITransportationItemBuilder extends Record<string, any> {
   getResult(): TransportationItem
   reset(): ITransportationItemBuilder
+  setReadonly(): ITransportationItemBuilder
   setDefaultField(i: ApiTransportationItem, k: string): ITransportationItemBuilder
   setDriverName(i: ApiTransportationItem): ITransportationItemBuilder
   setTransportName(i: ApiTransportationItem): ITransportationItemBuilder
@@ -16,12 +17,19 @@ export interface ITransportationItemBuilder extends Record<string, any> {
 export class TransportationItemBuilder implements ITransportationItemBuilder {
   private data: TransportationItem | Record<string, any> = {};
 
+  constructor(private readonly readonly: boolean) {}
+
   getResult(): TransportationItem {
     return this.data as TransportationItem;
   }
 
   reset(): ITransportationItemBuilder {
     this.data = {};
+    return this;
+  }
+
+  setReadonly(): ITransportationItemBuilder {
+    this.setValue('readonly', this.readonly, false);
     return this;
   }
 
@@ -56,7 +64,7 @@ export class TransportationItemBuilder implements ITransportationItemBuilder {
     return this;
   }
 
-  private setValue(key: string, value: any): void {
-    set(this.data, key, value || '');
+  private setValue(key: string, value: any, defaultValue: any = ''): void {
+    set(this.data, key, value || defaultValue);
   }
 }
