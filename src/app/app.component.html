@@ -50,6 +50,17 @@
         [style.backgroundColor]="data ? '#23308e' : '#808080'"
         (click)="openModal(config.modalType, item)"
       ></button>
+
+      <button
+        *ngSwitchCase="'btn'"
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-times"
+        title="Очистити дані по поставці"
+        class="p-button-rounded p-button-danger"
+        (click)="clearLogistic(item)"
+      ></button>
     </ng-container>
 
     <button
@@ -73,3 +84,35 @@
 </p-dialog>
 
 <p-toast [baseZIndex]="5000" position="bottom-right"></p-toast>
+
+<p-toast position="center" key="confirm" (onClose)="notification.clearConfirmModal()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div class="flex flex-column" style="flex: 1">
+      <div class="text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{ message.summary }}</h4>
+        <p>{{ message.detail }}</p>
+      </div>
+      <div class="grid p-fluid">
+        <div class="col-6">
+          <button
+            type="button"
+            pButton
+            label="Так"
+            class="p-button-success"
+            (click)="onConfirmToClear()"
+          ></button>
+        </div>
+        <div class="col-6">
+          <button
+            pButton
+            type="button"
+            label="Ні"
+            class="p-button-secondary"
+            (click)="notification.clearConfirmModal()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>

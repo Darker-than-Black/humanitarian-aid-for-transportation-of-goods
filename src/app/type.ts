@@ -36,7 +36,7 @@ export interface ApiTransportationItem {
   addition?: Addition[]
 }
 
-export interface TransportationItem {
+export interface TransportationItem extends Record<string, any> {
   weight: string
   created: string
   created_format: string

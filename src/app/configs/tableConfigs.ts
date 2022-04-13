@@ -1,4 +1,4 @@
-import { FILTER_TYPES } from 'med-table';
+import {FILTER_TYPES, MedTableColumnConfig} from 'med-table';
 import { MODAL_TYPES } from './modalTypes';
 import { TableColumnConfig } from '../type';
 
@@ -120,6 +120,12 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     isDefaultModalTemplate: true,
   },
 ];
+
+export const TABLE_BTN_COLUMN: MedTableColumnConfig = {
+  key: 'btn',
+  label: '',
+  defaultValue: '',
+};
 
 export const ITEMS_TABLE_CONFIG: TableColumnConfig[] = [
   {

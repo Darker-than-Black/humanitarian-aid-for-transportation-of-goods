@@ -8,4 +8,6 @@ export const notificationMessages = {
   setCoordinatorError: 'Помилка встановлення координатора',
   exportTravelLetterSuccess: 'Маршрутний лист завантажено',
   exportTravelLetterError: 'Помилка завантаження маршрутного листа',
+  clearLogisticSuccess: 'Поставку очищено',
+  clearLogisticError: 'Помилка очищення поставки',
 };

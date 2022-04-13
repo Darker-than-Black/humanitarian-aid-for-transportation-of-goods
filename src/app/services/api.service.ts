@@ -115,6 +115,21 @@ export class ApiService {
     );
   }
 
+  clearLogistic(data: TransportationItem & { clear: number }): Observable<TransportationItem | undefined> {
+    return this.http.post<ServerResponse<TransportationItem>>(this.routes['SET_COORDINATOR'], data, this.httpOptions).pipe(
+        map(({data, error}) => {
+          if (error) {
+            this.notification.add(notificationMessages.clearLogisticError, NOTIFICATION_TYPES.ERROR);
+            return;
+          }
+
+          this.notification.add(notificationMessages.clearLogisticSuccess, NOTIFICATION_TYPES.SUCCESS);
+          return data;
+        }),
+        catchError(this.handleError<undefined>(notificationMessages.serverError, 'addTransport')),
+    );
+  }
+
   private handleError<T>(message: string, operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       this.notification.add(message, NOTIFICATION_TYPES.ERROR);

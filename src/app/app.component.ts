@@ -1,13 +1,14 @@
+import {MedTableColumnConfig} from 'med-table';
 import {Component, OnInit, Type, ViewChild} from '@angular/core';
 
 import {ApiService} from './services/api.service';
 import {modalDictionary} from './configs/modalDictionary';
-import {GOODS_TABLE_CONFIG} from './configs/tableConfigs';
 import {NotificationService} from './services/notification.service';
 import {modalTitleDictionary} from './configs/modalTitleDictionary';
+import {GOODS_TABLE_CONFIG, TABLE_BTN_COLUMN} from './configs/tableConfigs';
 import {ModalContentDirective} from './directives/modal-content.directive';
 import {DEFAULT_MODAL_SETTINGS, modalSettingsDictionary} from './configs/modalSettings';
-import {FormComponent, ModalSettings, TableColumnConfig, TransportationItem} from './type';
+import {ApiTransportationItem, FormComponent, ModalSettings, TableColumnConfig, TransportationItem} from './type';
 import {TransportationItemDirector} from './services/TransportationItemHandler/TransportationItemDirector';
 import {TravelLetterBuilder} from './services/TravelLetterHandler/TravelLetterBuilder';
 import {SheetsGenerator} from './services/TravelLetterHandler/SheetsGenerator/SheetsGenerator';
@@ -24,15 +25,16 @@ const travelLetterBuilder = new TravelLetterBuilder();
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private apiService: ApiService, private notification: NotificationService) {}
+  constructor(private apiService: ApiService, public notification: NotificationService) {}
 
   loading: boolean = false;
   data: TransportationItem[] = [];
   modalTitle: string = '';
   modalType: string = '';
-  tableConfig = GOODS_TABLE_CONFIG;
+  tableConfig: MedTableColumnConfig[] = GOODS_TABLE_CONFIG;
   selectedIds: string[] = [];
   readonly: boolean = false;
+  clearItem?: TransportationItem;
 
   get modalSettings(): ModalSettings {
     const settings = modalSettingsDictionary.get(this.modalType);
@@ -45,13 +47,16 @@ export class AppComponent implements OnInit {
     this.loading = true;
 
     this.apiService.getTransportationOfGoods().subscribe(({data, readonly}) => {
+      if (!readonly) {
+        this.tableConfig.push(TABLE_BTN_COLUMN);
+      }
       this.data = data.map(item => itemBuilder.build(item, readonly));
       this.readonly = readonly;
       this.loading = false;
     });
   }
 
-  openModal(type: string, item:TransportationItem): void {
+  openModal(type: string, item: TransportationItem): void {
     const component = modalDictionary.get(type);
 
     if (!component) { return; }
@@ -78,6 +83,19 @@ export class AppComponent implements OnInit {
     })
   }
 
+  clearLogistic(item: TransportationItem): void {
+    this.clearItem = item;
+    this.notification.addConfirmOfDeleteItem(`Очистити дані по поставці ${item.name}?`);
+  }
+
+  onConfirmToClear(): void {
+    this.apiService.clearLogistic({...this.clearItem, clear: 1} as any).subscribe(item => {
+      if (item) this.updateItem(item);
+      this.clearItem = undefined;
+      this.notification.clearConfirmModal();
+    });
+  }
+
   private setTitle(type: string): void {
     this.modalTitle = modalTitleDictionary.get(type) || '';
   }
@@ -88,9 +106,18 @@ export class AppComponent implements OnInit {
     // set props
     componentRef.instance.data = data;
     // auto close modal
-    componentRef.instance.finally.subscribe(data => {
+    componentRef.instance.finally.subscribe(item => {
       this.setTitle('');
-      this.data = this.data.map(el => el.id === data.id ? itemBuilder.build(data, this.readonly) : el);
+      this.updateItem(item);
+    });
+  }
+
+  private updateItem(item: ApiTransportationItem): void {
+    this.data.forEach(el => {
+      if (el.id === item.id) {
+        const newItem = itemBuilder.build(item, this.readonly);
+        Object.entries(newItem).forEach(([key, value]) => el[key] = value);
+      }
     });
   }
 }
