@@ -7,6 +7,7 @@ export const TRANSPORTATION_ITEM_KEYS: string[] = [
     'name',
     'total',
     'sender',
+    'sender_region',
     'driver',
     'volume',
     'recipient',
