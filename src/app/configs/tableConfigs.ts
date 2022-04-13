@@ -19,6 +19,7 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     key: 'priority.name',
     filterable: true,
     modalType: MODAL_TYPES.PRIORITY,
+    filterType: FILTER_TYPES.SELECT,
   },
   {
     label: 'Дата створення партії',
@@ -41,6 +42,7 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     filterable: true,
     modalType: MODAL_TYPES.SENDER,
     isDefaultModalTemplate: true,
+    filterType: FILTER_TYPES.SELECT,
   },
   {
     label: 'Регіон відправника',
@@ -61,6 +63,7 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     filterable: true,
     modalType: MODAL_TYPES.STATUS,
     isDefaultModalTemplate: true,
+    filterType: FILTER_TYPES.SELECT,
   },
   {
     label: 'Довантаження',
