@@ -20,6 +20,7 @@ export const TRANSPORTATION_ITEM_KEYS: string[] = [
     'recipient_phone',
     'recipient_address',
     'recipient_contact',
+    'recipient_region',
     'sender_address',
     'sender_contact',
     'sender_name',

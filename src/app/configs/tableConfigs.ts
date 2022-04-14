@@ -37,6 +37,12 @@ export const GOODS_TABLE_CONFIG: TableColumnConfig[] = [
     filterType: FILTER_TYPES.SELECT,
   },
   {
+    label: 'Регіон отримувача',
+    key: 'recipient_region',
+    filterable: true,
+    filterType: FILTER_TYPES.SELECT,
+  },
+  {
     label: 'Відправник',
     key: 'sender',
     filterable: true,
