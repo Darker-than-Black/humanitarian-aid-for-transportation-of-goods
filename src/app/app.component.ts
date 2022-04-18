@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
     this.apiService.getTransportationOfGoods().subscribe(({data, readonly}) => {
       if (!readonly) {
-        this.tableConfig.push(TABLE_BTN_COLUMN);
+        this.tableConfig = GOODS_TABLE_CONFIG.concat(TABLE_BTN_COLUMN);
       }
       this.data = data.map(item => itemBuilder.build(item, readonly));
       this.readonly = readonly;
