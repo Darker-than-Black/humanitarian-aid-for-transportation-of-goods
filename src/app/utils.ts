@@ -35,3 +35,16 @@ export const sumListProps = <T extends Record<string, any>> (list: T[], key: str
 export const formatLocaleDate = (date: Date): string => new Intl.DateTimeFormat('uk-UA', {
     day: '2-digit', month: '2-digit', year: 'numeric',
 }).format(date)
+
+export const copyToClipboard = async (str: string): Promise<void> => {
+    if (navigator.clipboard) {
+        await navigator.clipboard.writeText(str);
+    }
+
+    const el = document.createElement('textarea');
+    el.value = str;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+};

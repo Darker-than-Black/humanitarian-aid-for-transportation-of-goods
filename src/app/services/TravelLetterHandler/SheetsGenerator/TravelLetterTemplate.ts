@@ -22,7 +22,7 @@ export class TravelLetterTemplate {
 
   create (): CellObject[][] {
     this.pushRow(this.rowBuilder.emptyRow())
-      .pushRow(this.rowBuilder.listItemRow('Шляховий лист для а/м No.', this.travelLetterName))
+      .pushRow(this.rowBuilder.listItemRow('Товаро-транспортна накладна для а/м No.', this.travelLetterName))
       .setSenders();
 
     return this.rows;
@@ -44,7 +44,7 @@ export class TravelLetterTemplate {
       });
 
       this.pushRow(this.rowBuilder.tableTotalRow(recipients));
-    })
+    });
 
     return this;
   }

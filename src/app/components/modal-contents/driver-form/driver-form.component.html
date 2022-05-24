@@ -2,9 +2,9 @@
   <app-tab tabTitle="Замінити">
     <p-listbox
       [filter]="true"
+      [disabled]="loading"
       [options]="drivers"
       [(ngModel)]="selectedDriver"
-      [disabled]="loading"
       optionLabel="label"
       (onDblClick)="updateItem({driver: selectedDriver})"
     ></p-listbox>

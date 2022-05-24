@@ -1,4 +1,5 @@
 import {MedTableColumnConfig} from 'med-table';
+import {TooltipOptions} from 'primeng/tooltip';
 import {Component, OnInit, Type, ViewChild} from '@angular/core';
 
 import {ApiService} from './services/api.service';
@@ -15,6 +16,7 @@ import {SheetsGenerator} from './services/TravelLetterHandler/SheetsGenerator/Sh
 import {notificationMessages} from './configs/notificationMessages';
 import {NOTIFICATION_TYPES} from './configs/notificationTypes';
 import {READONLY_KEYS} from './configs/readonlyKeys';
+import {copyToClipboard} from './utils';
 
 const itemBuilder = new TransportationItemDirector();
 const travelLetterBuilder = new TravelLetterBuilder();
@@ -75,7 +77,7 @@ export class AppComponent implements OnInit {
       try {
         const list = travelLetterBuilder.build(data);
         const generator = new SheetsGenerator(list);
-        generator.generate('Маршрутний_лист', travelLetterBuilder.dateRange);
+        generator.generate('Товаро-транспортна_накладна', travelLetterBuilder.dateRange);
         this.notification.add(notificationMessages.exportTravelLetterSuccess, NOTIFICATION_TYPES.SUCCESS);
       } catch {
         this.notification.add(notificationMessages.exportTravelLetterError, NOTIFICATION_TYPES.ERROR);
@@ -94,6 +96,11 @@ export class AppComponent implements OnInit {
       this.clearItem = undefined;
       this.notification.clearConfirmModal();
     });
+  }
+
+  async copyToClipboard(data: string): Promise<void> {
+    await copyToClipboard(data);
+    this.notification.add('Скопійовано', NOTIFICATION_TYPES.SUCCESS);
   }
 
   private setTitle(type: string): void {
